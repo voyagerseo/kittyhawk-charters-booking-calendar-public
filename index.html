@@ -4,13 +4,9 @@
   <meta charset="UTF-8" />
   <title>Boat Booking Calendar</title>
 
-  <!-- FullCalendar CSS from unpkg -->
-  <link href="https://unpkg.com/@fullcalendar/core@6.1.8/index.global.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/@fullcalendar/daygrid@6.1.8/index.global.min.css" rel="stylesheet">
-
-  <!-- FullCalendar JS from unpkg -->
-  <script src="https://unpkg.com/@fullcalendar/core@6.1.8/index.global.min.js"></script>
-  <script src="https://unpkg.com/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+  <!-- ✅ Working bundled FullCalendar build -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
 
   <style>
     body {
@@ -52,11 +48,10 @@
 </div>
 
 <script>
-  const API = 'https://boat-charter-booking.onrender.com'; // Your backend
+  const API = 'https://boat-charter-booking.onrender.com';
 
   document.addEventListener('DOMContentLoaded', () => {
     const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
-      plugins: [FullCalendar.dayGridPlugin],
       initialView: 'dayGridMonth',
       selectable: true,
       events: API + '/api/bookings',
