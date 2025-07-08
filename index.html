@@ -93,6 +93,20 @@
 
     cal.render();
   });
+
+  // Send height to parent every time calendar renders
+function sendHeightToParent() {
+  const height = document.body.scrollHeight;
+  window.parent.postMessage({ type: 'resize-calendar', height }, '*');
+}
+
+// Trigger after calendar render
+cal.render();
+sendHeightToParent();
+
+// Also trigger on window resize (in case layout shifts)
+window.addEventListener('resize', sendHeightToParent);
+  
 </script>
 
 </body>
