@@ -84,13 +84,22 @@
             borderColor: '#ccc'
           };
         }
-        return {
-          ...e,
-          title: 'Booked',
-          backgroundColor: '#ff4d4d',
-          borderColor: '#ff4d4d',
-          extendedProps: { status: e.status || 'booked' }
-        };
+       const status = e.status || 'booked';
+
+        const colorMap = {
+  booked: '#ff4d4d',
+  requested: '#ffd966',
+  available: '#4caf50'
+};
+
+return {
+  ...e,
+  title: status.charAt(0).toUpperCase() + status.slice(1),
+  backgroundColor: colorMap[status] || '#ccc',
+  borderColor: colorMap[status] || '#ccc',
+  extendedProps: { status }
+};
+
       },
       selectAllow: function(info) {
         const clickedDate = info.startStr;
