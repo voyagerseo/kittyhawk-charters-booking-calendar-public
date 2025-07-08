@@ -82,11 +82,31 @@
       initialView: 'dayGridMonth',
       selectable: true,
       events: API + '/api/bookings',
-      eventDataTransform: e => ({
-        ...e,
-        title: 'Booked',
-        backgroundColor: '#ff4d4d',
-        borderColor: '#ff4d4d'
+      eventDataTransform: e => {
+  if (e.status === 'blocked') {
+    return {
+      ...e,
+      display: 'background',
+      backgroundColor: '#ccc',
+      borderColor: '#ccc'
+    };
+  }
+
+  return {
+    ...e,
+    title: 'Booked',
+    backgroundColor: '#ff4d4d',
+    borderColor: '#ff4d4d'
+  };
+},
+
+selectAllow: function(info) {
+  const clickedDate = info.startStr;
+  const isBlocked = calendar.getEvents().some(e =>
+    e.startStr === clickedDate && e.extendedProps?.status === 'blocked'
+  );
+  return !isBlocked;
+}
       }),
       select: info => {
         document.getElementById('selDate').innerText = info.startStr;
