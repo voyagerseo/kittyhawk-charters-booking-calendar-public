@@ -5,27 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Boat Booking Calendar</title>
 
-  <!-- FullCalendar bundled version -->
+  <!-- FullCalendar bundled build -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 20px;
+    html, body {
       margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #fff;
     }
 
     #calendar {
       width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .fc {
+      width: 100% !important;
+      font-size: 0.95rem;
     }
 
     #bookingForm input,
     #bookingForm textarea {
       margin: 10px auto;
-      width: 80%;
-      padding: 8px;
+      width: 90%;
+      padding: 10px;
       display: block;
       font-size: 1rem;
     }
@@ -34,10 +41,6 @@
       padding: 10px 20px;
       margin-top: 10px;
       font-size: 1rem;
-    }
-
-    .fc {
-      font-size: 0.95rem;
     }
 
     @media (max-width: 600px) {
@@ -52,11 +55,11 @@
 </head>
 <body>
 
-<h2>Book a Boat Charter</h2>
+<h2 style="text-align: center; margin-top: 20px;">Book a Boat Charter</h2>
 <div id="calendar"></div>
 
 <div id="bookingForm" style="display:none;">
-  <h3>Booking for <span id="selDate"></span></h3>
+  <h3 style="text-align:center;">Booking for <span id="selDate"></span></h3>
   <input id="name" placeholder="Your Name" />
   <input id="email" placeholder="Your Email" />
   <textarea id="notes" placeholder="Notes (optional)"></textarea>
@@ -118,7 +121,6 @@
 
     cal.render();
     sendHeightToParent();
-
     window.addEventListener('resize', sendHeightToParent);
   });
 </script>
