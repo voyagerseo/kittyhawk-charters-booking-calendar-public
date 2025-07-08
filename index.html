@@ -95,6 +95,7 @@
 
         document.getElementById('submit').onclick = () => {
           const name = document.getElementById('name').value;
+          const phone = document.getElementById('phone').value;
           const email = document.getElementById('email').value;
           const notes = document.getElementById('notes').value;
 
@@ -103,7 +104,7 @@
           fetch(API + '/api/bookings/request', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ date: info.startStr, name, email, notes })
+            body: JSON.stringify({ date: info.startStr, name, phone, email, notes })
           })
             .then(r => r.json())
             .then(d => {
