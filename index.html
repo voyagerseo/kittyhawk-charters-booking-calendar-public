@@ -29,7 +29,7 @@
   const API = 'https://boat-charter-booking.onrender.com';
 
   document.addEventListener('DOMContentLoaded', () => {
-    const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
+    const cal = new Calendar(document.getElementById('calendar'), {
       initialView: 'dayGridMonth',
       selectable: true,
       events: API + '/api/bookings',
