@@ -3,13 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <title>Boat Booking Calendar</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+
+  <!-- FullCalendar CSS from unpkg -->
+  <link href="https://unpkg.com/@fullcalendar/core@6.1.8/index.global.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/@fullcalendar/daygrid@6.1.8/index.global.min.css" rel="stylesheet">
+
+  <!-- FullCalendar JS from unpkg -->
+  <script src="https://unpkg.com/@fullcalendar/core@6.1.8/index.global.min.js"></script>
+  <script src="https://unpkg.com/@fullcalendar/daygrid@6.1.8/index.global.min.js"></script>
+
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 20px; }
-    #calendar { max-width: 900px; margin: 0 auto; }
-    #bookingForm input, #bookingForm textarea { margin: 10px auto; width: 80%; padding: 8px; display: block; }
-    #submit { padding: 10px 20px; margin-top: 10px; }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #calendar {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    #bookingForm input,
+    #bookingForm textarea {
+      margin: 10px auto;
+      width: 80%;
+      padding: 8px;
+      display: block;
+    }
+
+    #submit {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -26,10 +52,11 @@
 </div>
 
 <script>
-  const API = 'https://boat-charter-booking.onrender.com'; // Replace if needed
+  const API = 'https://boat-charter-booking.onrender.com'; // Your backend
 
   document.addEventListener('DOMContentLoaded', () => {
     const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
+      plugins: [FullCalendar.dayGridPlugin],
       initialView: 'dayGridMonth',
       selectable: true,
       events: API + '/api/bookings',
