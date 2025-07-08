@@ -1,5 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Boat Booking Calendar</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 20px; }
+    #calendar { max-width: 900px; margin: 0 auto; }
+    #bookingForm input, #bookingForm textarea { margin: 10px auto; width: 80%; padding: 8px; display: block; }
+    #submit { padding: 10px 20px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>Book a Boat Charter</h2>
+<div id="calendar"></div>
+
+<div id="bookingForm" style="display:none;">
+  <h3>Booking for <span id="selDate"></span></h3>
+  <input id="name" placeholder="Your Name">
+  <input id="email" placeholder="Your Email">
+  <textarea id="notes" placeholder="Notes (optional)"></textarea>
+  <button id="submit">Send Request</button>
+</div>
+
 <script>
-  const API = 'https://boat-charter-booking.onrender.com';
+  const API = 'https://boat-charter-booking.onrender.com'; // Replace if needed
 
   document.addEventListener('DOMContentLoaded', () => {
     const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
