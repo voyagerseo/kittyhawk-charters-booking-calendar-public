@@ -70,52 +70,41 @@
 <script>
   const API = 'https://boat-charter-booking.onrender.com';
 
-  function sendHeightToParent() {
-    setTimeout(() => {
-      const height = document.documentElement.scrollHeight;
-      window.parent.postMessage({ type: 'resize-calendar', height }, '*');
-    }, 100);
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
-    const cal = new FullCalendar.Calendar(document.getElementById('calendar'), {
+    const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
       initialView: 'dayGridMonth',
       selectable: true,
-      events: API + '/api/bookings',
+      events: API + '/api/bookings/all',
       eventDataTransform: e => {
-  if (e.status === 'blocked') {
-    return {
-      ...e,
-      display: 'background',
-      backgroundColor: '#ccc',
-      borderColor: '#ccc'
-    };
-  }
-
-  return {
-    ...e,
-    title: 'Booked',
-    backgroundColor: '#ff4d4d',
-    borderColor: '#ff4d4d'
-  };
-},
-
-selectAllow: function(info) {
-  const clickedDate = info.startStr;
-  const isBlocked = calendar.getEvents().some(e =>
-    e.startStr === clickedDate && e.extendedProps?.status === 'blocked'
-  );
-  return !isBlocked;
-}
-      }),
+        if (e.status === 'blocked') {
+          return {
+            ...e,
+            display: 'background',
+            backgroundColor: '#ccc',
+            borderColor: '#ccc'
+          };
+        }
+        return {
+          ...e,
+          title: 'Booked',
+          backgroundColor: '#ff4d4d',
+          borderColor: '#ff4d4d',
+          extendedProps: { status: e.status || 'booked' }
+        };
+      },
+      selectAllow: function(info) {
+        const clickedDate = info.startStr;
+        const isBlocked = calendar.getEvents().some(e =>
+          e.startStr === clickedDate && e.extendedProps?.status === 'blocked'
+        );
+        return !isBlocked;
+      },
       select: info => {
         document.getElementById('selDate').innerText = info.startStr;
         document.getElementById('bookingForm').style.display = 'block';
-        sendHeightToParent();
 
         document.getElementById('submit').onclick = () => {
           const name = document.getElementById('name').value;
-          const phone = document.getElementById('phone').value;
           const email = document.getElementById('email').value;
           const notes = document.getElementById('notes').value;
 
@@ -124,26 +113,23 @@ selectAllow: function(info) {
           fetch(API + '/api/bookings/request', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ date: info.startStr, name, phone, email, notes })
+            body: JSON.stringify({ date: info.startStr, name, email, notes })
           })
-            .then(r => r.json())
-            .then(d => {
-              if (d.success) {
-                alert('Booking sent!');
-                document.getElementById('bookingForm').style.display = 'none';
-                cal.refetchEvents();
-                sendHeightToParent();
-              } else {
-                alert('Error sending request.');
-              }
-            });
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              alert('Booking sent!');
+              calendar.refetchEvents();
+              document.getElementById('bookingForm').style.display = 'none';
+            } else {
+              alert('Error sending request.');
+            }
+          });
         };
       }
     });
 
-    cal.render();
-    sendHeightToParent();
-    window.addEventListener('resize', sendHeightToParent);
+    calendar.render();
   });
 </script>
 
